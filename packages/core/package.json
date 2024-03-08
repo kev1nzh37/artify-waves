@@ -1,20 +1,13 @@
 {
-  "name": "@repo/ui",
+  "name": "@repo/core",
   "version": "0.0.0",
   "type": "module",
-  "exports": {
-    ".": {
-      "default": "./dist/index.js",
-      "types": "./index.ts"
-    }
-  },
   "scripts": {
     "lint": "eslint *.ts*",
     "build": "rollup --config",
     "dev": "pnpm build --watch"
   },
   "devDependencies": {
-    "@repo/core": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@rollup/plugin-typescript": "^11.1.6",

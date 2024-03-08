@@ -62,7 +62,7 @@ importers:
   packages/config-typescript:
     specifiers: {}
 
-  packages/ui:
+  packages/core:
     specifiers:
       '@repo/eslint-config': workspace:*
       '@repo/typescript-config': workspace:*
@@ -74,6 +74,30 @@ importers:
       rollup: ^4.12.0
       typescript: ^5.3.3
     devDependencies:
+      '@repo/eslint-config': link:../config-eslint
+      '@repo/typescript-config': link:../config-typescript
+      '@rollup/plugin-typescript': 11.1.6_savq4hhw7xqq5rxtv7vpziuczi
+      '@types/react': 18.2.64
+      '@types/react-dom': 18.2.21
+      eslint: 8.57.0
+      react: 18.2.0
+      rollup: 4.12.1
+      typescript: 5.4.2
+
+  packages/ui:
+    specifiers:
+      '@repo/core': workspace:*
+      '@repo/eslint-config': workspace:*
+      '@repo/typescript-config': workspace:*
+      '@rollup/plugin-typescript': ^11.1.6
+      '@types/react': ^18.2.61
+      '@types/react-dom': ^18.2.19
+      eslint: ^8.57.0
+      react: ^18.2.0
+      rollup: ^4.12.0
+      typescript: ^5.3.3
+    devDependencies:
+      '@repo/core': link:../core
       '@repo/eslint-config': link:../config-eslint
       '@repo/typescript-config': link:../config-typescript
       '@rollup/plugin-typescript': 11.1.6_savq4hhw7xqq5rxtv7vpziuczi
