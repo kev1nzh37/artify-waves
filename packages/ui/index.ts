@@ -1,1 +1,1 @@
-export * from "./src/components/Shador"
+export { Shador } from "./src/components/Shador"

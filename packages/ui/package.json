@@ -2,10 +2,11 @@
   "name": "@repo/ui",
   "version": "0.0.0",
   "type": "module",
+  "types": "dist/config-typescript/dist/index.d.ts",
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "types": "./index.ts"
+      "types": "./dist/config-typescript/dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {

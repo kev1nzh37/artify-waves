@@ -7,6 +7,12 @@
     "build": "rollup --config",
     "dev": "pnpm build --watch"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/config-typescript/dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
@@ -17,5 +23,8 @@
     "react": "^18.2.0",
     "rollup": "^4.12.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "ogl": "^1.0.5"
   }
 }
