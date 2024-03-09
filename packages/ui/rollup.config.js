@@ -5,6 +5,6 @@ export default {
   output: {
     file: "dist/index.js",
   },
-  external: ["react/jsx-runtime", "@repo/core"],
+  external: ["react/jsx-runtime", "@repo/core", "react"],
   plugins: [typescript()],
 }
