@@ -77,6 +77,7 @@ importers:
       ogl: ^1.0.5
       react: ^18.2.0
       rollup: ^4.12.0
+      rollup-plugin-string: ^3.0.0
       typescript: ^5.3.3
     dependencies:
       ogl: 1.0.5
@@ -89,6 +90,7 @@ importers:
       eslint: 8.57.0
       react: 18.2.0
       rollup: 4.12.1
+      rollup-plugin-string: 3.0.0
       typescript: 5.4.2
 
   packages/ui:
@@ -102,6 +104,7 @@ importers:
       eslint: ^8.57.0
       react: ^18.2.0
       rollup: ^4.12.0
+      rollup-plugin-string: ^3.0.0
       typescript: ^5.3.3
     devDependencies:
       '@repo/core': link:../core
@@ -113,6 +116,7 @@ importers:
       eslint: 8.57.0
       react: 18.2.0
       rollup: 4.12.1
+      rollup-plugin-string: 3.0.0
       typescript: 5.4.2
 
 packages:
@@ -2914,6 +2918,10 @@ packages:
       '@types/unist': 2.0.10
     dev: false
 
+  /estree-walker/0.6.1:
+    resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
+    dev: true
+
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: true
@@ -5351,6 +5359,18 @@ packages:
   /robust-predicates/3.0.2:
     resolution: {integrity: sha512-IXgzBWvWQwE6PrDI05OvmXUIruQTcoMDzRsOd5CDvHCVLcLHMTSYvOK5Cm46kWqlV3yAbuSpBZdJ5oP5OUoStg==}
     dev: false
+
+  /rollup-plugin-string/3.0.0:
+    resolution: {integrity: sha512-vqyzgn9QefAgeKi+Y4A7jETeIAU1zQmS6VotH6bzm/zmUQEnYkpIGRaOBPY41oiWYV4JyBoGAaBjYMYuv+6wVw==}
+    dependencies:
+      rollup-pluginutils: 2.8.2
+    dev: true
+
+  /rollup-pluginutils/2.8.2:
+    resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
+    dependencies:
+      estree-walker: 0.6.1
+    dev: true
 
   /rollup/4.12.1:
     resolution: {integrity: sha512-ggqQKvx/PsB0FaWXhIvVkSWh7a/PCLQAsMjBc+nA2M8Rv2/HG0X6zvixAB7KyZBRtifBUhy5k8voQX/mRnABPg==}
