@@ -1,6 +1,7 @@
 import { Renderer, Program, Color, Mesh, Triangle } from "ogl"
 import vert from "./vertex.glsl"
 import frag from "./fragment.glsl"
+import { parseColor } from "../utils/color"
 export class ShadorClient {
   private dom: HTMLDivElement | null = null
   private renderer: Renderer | null = null
@@ -8,12 +9,20 @@ export class ShadorClient {
   private program: Program | null = null
   private mesh: Mesh | null = null
   private gl: Renderer["gl"] | null = null
+  private primaryColor: string | null = null
 
-  constructor(dom: any) {
+  constructor({
+    dom,
+    color,
+  }: {
+    dom: HTMLDivElement,
+    color: string
+  }) {
     if (dom === null) {
       throw new Error("DOM element is null")
     }
     this.dom = dom
+    this.primaryColor = color
     this.initRenderer()
   }
 
@@ -26,15 +35,19 @@ export class ShadorClient {
     this.resize()
 
     const geometry = new Triangle(this.gl)
+    if (this.primaryColor === null) {
+      throw new Error("Primary color is null")
+    }
+    const { r, g, b } = parseColor(this.primaryColor)
 
     this.program = new Program(this.gl, {
       vertex: vert,
       fragment: frag,
       uniforms: {
         uTime: { value: 0 },
-        uColor: { value: new Color(0.4, 167, 0.69) },
-        uColor1: { value: new Color(1.0, 0, 0) },
-        uColor2: { value: new Color(0, 0, 1.0) },
+        uColor: { value: new Color(r, g, b) },
+        luminance: { value: 0.5 },
+        amplitude: { value: 0.3 },
       },
     })
 
@@ -60,8 +73,27 @@ export class ShadorClient {
     this.renderer.render({ scene: this.mesh })
   }
 
-  public reload() {
-    
+  public refresh(color: string): void {
+    // 更新 primaryColor 属性
+    this.primaryColor = color;
+  
+    // 解析新颜色值
+    if (this.primaryColor === null) {
+      throw new Error("Primary color is null");
+    }
+    const { r, g, b } = parseColor(this.primaryColor);
+  
+    // 确保 program 存在
+    if (this.program === null) {
+      throw new Error("Program is null");
+    }
+  
+    // 更新 program 的 uColor uniform
+    this.program.uniforms.uColor.value = new Color(r, g, b);
+  
+    // 可选：如果你希望立即看到颜色变化的效果，可以在这里调用渲染函数
+    // 如果你的渲染循环已经在持续运行，这可能不是必需的
+    // this.render();
   }
 }
 // 0.5: 这个值是基础亮度值，确保最终颜色不会太暗。它提供了一个固定的起点，确保颜色值在至少是中等亮度。
