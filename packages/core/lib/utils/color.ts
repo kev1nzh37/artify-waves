@@ -1,5 +1,6 @@
 export const parseColor = (input: string) => {
     let r = 0, g = 0, b = 0;
+    input = input.toLowerCase();
 
     // 如果是 rgb 格式
     if (input.startsWith('rgb')) {

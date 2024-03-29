@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react"
 
 export interface ShadorProps {
   color?: string
+  width?: number | string
+  height?: number | string
 }
 
 export const Shador: React.ForwardRefRenderFunction<
@@ -11,7 +13,9 @@ export const Shador: React.ForwardRefRenderFunction<
 > = (props) => {
 
   const {
-    color
+    color,
+    width = '100%',
+    height = '100%'
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
@@ -23,6 +27,8 @@ export const Shador: React.ForwardRefRenderFunction<
     const c = new ShadorClient({
       dom: dom.current,
       color: color || primaryColor,
+      width,
+      height
     })
     setClient(c)
   }
@@ -33,9 +39,10 @@ export const Shador: React.ForwardRefRenderFunction<
 
   useEffect(() => {
     if (client) {
+      console.log(color)
       client.refresh(color || primaryColor);
     }
   }, [color]);
 
-  return <div ref={dom}></div>
+  return <div ref={dom} style={{ width, height }}></div>
 }
