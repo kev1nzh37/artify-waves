@@ -5,6 +5,8 @@ export interface ShadorProps {
   color?: string
   width?: number | string
   height?: number | string
+  luminance?: number,
+  amplitude?: number,
 }
 
 export const Shador: React.ForwardRefRenderFunction<
@@ -15,20 +17,21 @@ export const Shador: React.ForwardRefRenderFunction<
   const {
     color,
     width = '100%',
-    height = '100%'
+    height = '100%',
+    luminance = null,
+    amplitude = null,
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
   const [client, setClient] = useState<ShadorClient | null>(null)
-  const primaryColor = `rgb(103, 28, 215)`
 
   const init = () => {
     if (!dom.current) return
     const c = new ShadorClient({
       dom: dom.current,
-      color: color || primaryColor,
-      width,
-      height
+      color,
+      luminance,
+      amplitude,
     })
     setClient(c)
   }
@@ -40,9 +43,13 @@ export const Shador: React.ForwardRefRenderFunction<
   useEffect(() => {
     if (client) {
       console.log(color)
-      client.refresh(color || primaryColor);
+      client.refresh({
+        color,
+        luminance,
+        amplitude,
+      });
     }
-  }, [color]);
+  }, [color, luminance, amplitude]);
 
   return <div ref={dom} style={{ width, height }}></div>
 }
