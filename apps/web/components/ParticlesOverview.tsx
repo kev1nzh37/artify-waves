@@ -1,11 +1,11 @@
-import { Shador } from "@repo/ui"
+import { Particles } from "@repo/ui"
 import { useState } from "react"
 import { Radio } from 'antd';
 
 
-export const Overview = () => {
+export const ParticlesOverview = () => {
   const [colors] = useState<string[]>([
-    'RGB(64, 123, 167)',
+    'rgb(103, 28, 215)',
     'RGB(170, 204, 102)',
     'RGB(150, 150, 150)',
     'RGB(255, 99, 71)',
@@ -21,7 +21,7 @@ export const Overview = () => {
   return (
     <div className="wave">
       <div className="wave-ret">
-        <Shador color={color} luminance={luminance} amplitude={amplitude} />
+        <Particles color={color} luminance={luminance} amplitude={amplitude} />
       </div>
       <div className="wave-config">
         <label>Color</label>

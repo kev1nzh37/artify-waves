@@ -1,15 +1,16 @@
-import { Renderer, Program, Mesh, Triangle, Color } from "ogl"
+import { Renderer, Program, Mesh, Triangle, Color, Camera, Geometry } from "ogl"
 import vert from "./vertex.glsl"
 import frag from "./fragment.glsl"
 import { parseColor } from "../utils/color"
 
-export class ShadorClient {
+export class ParticlesClient {
   public program: Program | null = null
   public gl: Renderer["gl"] | null = null
   public dom: HTMLDivElement | null = null
   public renderer: Renderer | null = null
   public mesh: Mesh | null = null
   public animateId: number = 0
+  public camera: any = null
 
   private color: string = 'rgb(103, 28, 215)'
   private luminance: number = 0.5
@@ -30,16 +31,7 @@ export class ShadorClient {
     this.dom = dom
     this.initConfig({ color, luminance, amplitude })
     const { r, g, b } = parseColor(this.color)
-    this.initRenderer({
-      vertex: vert,
-      fragment: frag,
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new Color(r, g, b) },
-        luminance: { value: this.luminance },
-        amplitude: { value: this.amplitude },
-      },
-    })
+    this.initRenderer()
   }
 
   private initConfig = ({
@@ -64,6 +56,13 @@ export class ShadorClient {
     this.animateId = requestAnimationFrame(this.update)
     this.program.uniforms.uTime.value = t * 0.001
     this.renderer.render({ scene: this.mesh })
+
+    this.mesh.rotation.x = Math.sin(t * 0.0002) * 0.1;
+    this.mesh.rotation.y = Math.cos(t * 0.0005) * 0.15;
+    this.mesh.rotation.z += 0.01;
+
+    this.program.uniforms.uTime.value = t * 0.001;
+    this.renderer.render({ scene: this.mesh, camera: this.camera });
   }
 
   public refresh({ color, luminance, amplitude }: {
@@ -71,37 +70,58 @@ export class ShadorClient {
     luminance?: number | null
     amplitude?: number | null
   }): void {
-    if (this.program === null) return
+    // if (this.program === null) return
 
-    if (color) {
-      this.color = color;
-      const { r, g, b } = parseColor(this.color);
-      this.program.uniforms.uColor.value = new Color(r, g, b);
-    }
-    if (luminance) {
-      this.luminance = luminance;
-      this.program.uniforms.luminance.value = luminance;
-    }
-    if (amplitude) {
-      this.amplitude = amplitude;
-      this.program.uniforms.amplitude.value = amplitude;
-    }
+    // if (color) {
+    //   this.color = color;
+    //   const { r, g, b } = parseColor(this.color);
+    //   this.program.uniforms.uColor.value = new Color(r, g, b);
+    // }
+    // if (luminance) {
+    //   this.luminance = luminance;
+    //   this.program.uniforms.luminance.value = luminance;
+    // }
+    // if (amplitude) {
+    //   this.amplitude = amplitude;
+    //   this.program.uniforms.amplitude.value = amplitude;
+    // }
   }
-  public initRenderer = (programConfig: any): void => {
-    if (programConfig === null) {
-      throw new Error("Program Config is null")
-    }
+  public initRenderer = (): void => {
     this.renderer = new Renderer()
     this.gl = this.renderer.gl
     this.gl.clearColor(1, 1, 1, 1)
 
+    this.camera = new Camera(this.gl, { fov: 15 });
+    this.camera.position.z = 15;
+
     window.addEventListener("resize", this.resize, false)
     this.resize()
 
-    const geometry = new Triangle(this.gl)
+    const num = 100;
+    const position = new Float32Array(num * 3);
+    const random = new Float32Array(num * 4);
 
-    this.program = new Program(this.gl, programConfig)
-    this.mesh = new Mesh(this.gl, { geometry, program: this.program })
+    for (let i = 0; i < num; i++) {
+      position.set([Math.random(), Math.random(), Math.random()], i * 3);
+      random.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
+    }
+
+    const geometry = new Geometry(this.gl, {
+      position: { size: 3, data: position },
+      random: { size: 4, data: random },
+    });
+
+    this.program = new Program(this.gl, {
+      vertex: vert,
+      fragment: frag,
+      uniforms: {
+        uTime: { value: 0 },
+      },
+      transparent: true,
+      depthTest: false,
+    });
+
+    this.mesh = new Mesh(this.gl, { mode: this.gl.POINTS, geometry, program: this.program });
     this.animateId = requestAnimationFrame(this.update)
 
     const width = this.dom?.offsetWidth || 100;
