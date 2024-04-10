@@ -6,6 +6,7 @@ export default {
     file: "./dist/index.js",
     format: "es",
   },
+  external: ['ogl'],
   plugins: [
     typescript(),
     string({

@@ -1,37 +1,36 @@
-import { ShadorClient } from "@repo/core"
+import { MandalaClient } from "@repo/core"
 import { useEffect, useRef, useState } from "react"
 import { GlobalProps } from "../utils/global-props"
 
-export interface ShadorProps extends GlobalProps {
-  color?: string
-  luminance?: number,
-  amplitude?: number,
+import '../../styles/global.scss'
+
+export interface Props extends GlobalProps {
+  backgroundColor?: string
+  timeScale?: number
 }
 
-export const Shador: React.ForwardRefRenderFunction<
+export const Mandala: React.ForwardRefRenderFunction<
   HTMLDivElement,
-  ShadorProps
+  Props
 > = (props) => {
 
   const {
-    color,
+    backgroundColor,
+    timeScale,
     width = '100%',
     height = '100%',
-    luminance,
-    amplitude,
     children = null
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
-  const [client, setClient] = useState<ShadorClient | null>(null)
+  const [client, setClient] = useState<MandalaClient | null>(null)
 
   const init = () => {
     if (!dom.current) return
-    const c = new ShadorClient({
+    const c = new MandalaClient({
       dom: dom.current,
-      color,
-      luminance,
-      amplitude,
+      backgroundColor,
+      timeScale,
     })
     setClient(c)
   }
@@ -42,20 +41,23 @@ export const Shador: React.ForwardRefRenderFunction<
 
   useEffect(() => {
     if (client) {
-      console.log(color)
       client.refresh({
-        color,
-        luminance,
-        amplitude,
+        backgroundColor,
+        timeScale,
       });
     }
-  }, [color, luminance, amplitude]);
+    return () => {
+      if (client) {
+        client.destroy()
+      }
+    }
+  }, [backgroundColor, timeScale]);
 
   return (
     <div
       className={[
         'wave-client',
-        'wave-shador-client',
+        'wave-mandala-client',
         children ? 'wave-client-fullscreen' : ''
       ].join(' ')}
       ref={dom}
@@ -66,5 +68,4 @@ export const Shador: React.ForwardRefRenderFunction<
       }
     </div>
   )
-
 }

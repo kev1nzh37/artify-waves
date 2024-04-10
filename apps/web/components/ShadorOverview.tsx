@@ -23,7 +23,7 @@ export const ShadorOverview = () => {
       <div className="wave-ret">
         <Shador color={color} luminance={luminance} amplitude={amplitude} />
       </div>
-      <div className="wave-config">
+      {/* <div className="wave-config">
         <label>Color</label>
         <div className="wave-config-color">
           {
@@ -76,7 +76,7 @@ export const ShadorOverview = () => {
             }
           </Radio.Group>
         </div>
-      </div>
+      </div> */}
     </div>
 
   )

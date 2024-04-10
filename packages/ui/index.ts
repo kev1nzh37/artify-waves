@@ -1,2 +1,3 @@
 export { Shador } from "./src/components/Shador"
-export { Particles } from "./src/components/Particles"
+export { Bits } from "./src/components/Bits"
+export { Mandala } from './src/components/Mandala'
