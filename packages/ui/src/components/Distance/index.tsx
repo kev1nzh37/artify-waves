@@ -1,37 +1,31 @@
-import { ShadorClient } from "@repo/core"
+import { DistanceClient } from "@repo/core"
 import { useEffect, useRef, useState } from "react"
 import { GlobalProps } from "../utils/global-props"
 
-export interface ShadorProps extends GlobalProps {
-  color?: string
-  luminance?: number,
-  amplitude?: number,
+import '../../styles/global.scss'
+
+export interface Props extends GlobalProps {
+
 }
 
-export const Shador: React.ForwardRefRenderFunction<
+export const Distance: React.ForwardRefRenderFunction<
   HTMLDivElement,
-  ShadorProps
+  Props
 > = (props) => {
 
   const {
-    color,
     width = '100%',
     height = '100%',
-    luminance,
-    amplitude,
     children = null
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
-  const [client, setClient] = useState<ShadorClient | null>(null)
+  const [client, setClient] = useState<DistanceClient | null>(null)
 
   const init = () => {
     if (!dom.current || client !== null) return
-    const c = new ShadorClient({
+    const c = new DistanceClient({
       dom: dom.current,
-      color,
-      luminance,
-      amplitude,
     })
     setClient(c)
   }
@@ -45,19 +39,11 @@ export const Shador: React.ForwardRefRenderFunction<
     };
   }, [client]);
 
-  useEffect(() => {
-    client?.refresh({
-      color,
-      luminance,
-      amplitude,
-    });
-  }, [color, luminance, amplitude]);
-
   return (
     <div
       className={[
         'wave-client',
-        'wave-shador-client',
+        'wave-distance-client',
         children ? 'wave-client-fullscreen' : ''
       ].join(' ')}
       ref={dom}
@@ -68,5 +54,4 @@ export const Shador: React.ForwardRefRenderFunction<
       }
     </div>
   )
-
 }

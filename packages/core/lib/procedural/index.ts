@@ -4,30 +4,22 @@ import frag from "./fragment.glsl";
 
 // https://www.shadertoy.com/view/dlGcDV
 
-export class BitsClient {
+export class ProceduralClient {
   private program: Program;
   private gl: Renderer["gl"];
   private dom: HTMLDivElement;
   private renderer: Renderer;
   private mesh: Mesh;
   private camera: Camera;
-  private backgroundColor: string;
-  private timeScale: number;
   private animateId: number = 0;
   private boundResize;
 
   constructor({
     dom,
-    backgroundColor = 'black',
-    timeScale = 1,
   }: {
     dom: HTMLDivElement;
-    backgroundColor?: string;
-    timeScale?: number;
   }) {
     this.dom = dom;
-    this.backgroundColor = backgroundColor;
-    this.timeScale = timeScale;
     this.renderer = new Renderer({ dpr: window.devicePixelRatio, alpha: true });
     this.gl = this.renderer.gl;
     this.camera = new Camera(this.gl, { fov: 45 });
@@ -43,15 +35,13 @@ export class BitsClient {
       uniforms: {
         iResolution: { value: [this.gl.canvas.width, this.gl.canvas.height] },
         iTime: { value: 0 },
-        backgroundColor: { value: new Color(this.backgroundColor) },
-        timeScale: { value: this.timeScale }
       },
     });
 
     this.mesh = new Mesh(this.gl, { geometry, program: this.program });
 
     this.boundResize = this.resize.bind(this);
-    window.addEventListener('resize', this.boundResize, false);
+    window.addEventListener("resize", this.boundResize, false);
     this.resize();
     this.dom.appendChild(this.gl.canvas);
     this.animateId = requestAnimationFrame(this.update.bind(this));
@@ -77,18 +67,8 @@ export class BitsClient {
     this.renderer.setSize(width, height);
   }
 
-  public refresh({ backgroundColor, timeScale }: {
-    backgroundColor?: string | null;
-    timeScale?: number;
-  }): void {
-    if (backgroundColor) {
-      this.backgroundColor = backgroundColor;
-      this.program.uniforms.backgroundColor.value = new Color(backgroundColor);
-    }
-    if (timeScale !== undefined) {
-      this.timeScale = timeScale;
-      this.program.uniforms.timeScale.value = timeScale;
-    }
+  public refresh({ }: {}): void {
+
   }
   public destroy(): void {
     cancelAnimationFrame(this.animateId);

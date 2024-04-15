@@ -1,4 +1,16 @@
 $primary-color: #5e00b5;
+$wave-box-shadow:
+  0 1px 2px 0 rgba(0, 0, 0, 0.03),
+  0 1px 6px -1px rgba(0, 0, 0, 0.02),
+  0 2px 4px 0 rgba(0, 0, 0, 0.02);
+
+$wave-border: 1px solid
+  hsl(
+    var(--nextra-primary-hue) var(--nextra-primary-saturation) 94% /
+      var(--tw-bg-opacity)
+  );
+
+$wave-border-radius: 12px;
 
 @font-face {
   font-family: "WPP Regular";
@@ -11,20 +23,13 @@ $primary-color: #5e00b5;
 
 .wave {
   &-ret {
-    border-radius: 12px;
+    border-radius: $wave-border-radius;
     overflow: hidden;
     margin-top: 48px;
     width: 100%;
     height: 480px;
-    box-shadow:
-      0 1px 2px 0 rgba(0, 0, 0, 0.03),
-      0 1px 6px -1px rgba(0, 0, 0, 0.02),
-      0 2px 4px 0 rgba(0, 0, 0, 0.02);
-    border: 1px solid
-      hsl(
-        var(--nextra-primary-hue) var(--nextra-primary-saturation) 94% /
-          var(--tw-bg-opacity)
-      );
+    box-shadow: $wave-box-shadow;
+    border: $wave-border;
   }
   &-config {
     display: flex;
@@ -54,6 +59,36 @@ $primary-color: #5e00b5;
               var(--tw-text-opacity)
           );
         }
+      }
+    }
+  }
+}
+
+.wave-all {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 16px;
+  margin-top: 24px;
+  .wave-item {
+    height: 200px;
+    &__view {
+      height: 150px;
+      box-shadow: $wave-box-shadow;
+      border: $wave-border;
+      border-radius: $wave-border-radius;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    &__name {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 18px;
+      margin-left: 4px;
+      transition: all 0.1s ease-in-out;
+      &:hover {
+        cursor: pointer;
+        border-bottom: 2px solid $primary-color;
       }
     }
   }

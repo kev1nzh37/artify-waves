@@ -26,7 +26,7 @@ export const Bits: React.ForwardRefRenderFunction<
   const [client, setClient] = useState<BitsClient | null>(null)
 
   const init = () => {
-    if (!dom.current) return
+    if (!dom.current || client !== null) return
     const c = new BitsClient({
       dom: dom.current,
       backgroundColor,
@@ -36,21 +36,19 @@ export const Bits: React.ForwardRefRenderFunction<
   }
 
   useEffect(() => {
-    init()
-  }, [])
+    init();
+
+    return () => {
+      console.log(client);
+      client?.destroy();
+    };
+  }, [client]);
 
   useEffect(() => {
-    if (client) {
-      client.refresh({
-        backgroundColor,
-        timeScale,
-      });
-    }
-    return () => {
-      if (client) {
-        client.destroy()
-      }
-    }
+    client?.refresh({
+      backgroundColor,
+      timeScale,
+    });
   }, [backgroundColor, timeScale]);
 
   return (

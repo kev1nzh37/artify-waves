@@ -1,33 +1,26 @@
-import { Renderer, Program, Mesh, Color, Camera, Geometry } from "ogl";
-import vert from "./vertex.glsl";
-import frag from "./fragment.glsl";
+import { Renderer, Program, Mesh, Camera, Geometry } from 'ogl';
+import vert from './vertex.glsl';
+import frag from './fragment.glsl';
 
-// https://www.shadertoy.com/view/dlGcDV
-
-export class BitsClient {
+export class DistanceClient {
   private program: Program;
-  private gl: Renderer["gl"];
+  private gl: Renderer['gl'];
   private dom: HTMLDivElement;
   private renderer: Renderer;
   private mesh: Mesh;
   private camera: Camera;
-  private backgroundColor: string;
-  private timeScale: number;
   private animateId: number = 0;
   private boundResize;
 
   constructor({
     dom,
-    backgroundColor = 'black',
-    timeScale = 1,
   }: {
     dom: HTMLDivElement;
     backgroundColor?: string;
     timeScale?: number;
   }) {
+    console.log('init')
     this.dom = dom;
-    this.backgroundColor = backgroundColor;
-    this.timeScale = timeScale;
     this.renderer = new Renderer({ dpr: window.devicePixelRatio, alpha: true });
     this.gl = this.renderer.gl;
     this.camera = new Camera(this.gl, { fov: 45 });
@@ -43,13 +36,10 @@ export class BitsClient {
       uniforms: {
         iResolution: { value: [this.gl.canvas.width, this.gl.canvas.height] },
         iTime: { value: 0 },
-        backgroundColor: { value: new Color(this.backgroundColor) },
-        timeScale: { value: this.timeScale }
       },
     });
 
     this.mesh = new Mesh(this.gl, { geometry, program: this.program });
-
     this.boundResize = this.resize.bind(this);
     window.addEventListener('resize', this.boundResize, false);
     this.resize();
@@ -58,7 +48,7 @@ export class BitsClient {
   }
 
   public update(t: number): void {
-    this.program.uniforms.iTime.value = t * 0.001;
+    this.program.uniforms.iTime.value = t * 0.001; // Adjust time scale
     this.renderer.render({ scene: this.mesh, camera: this.camera });
     this.animateId = requestAnimationFrame(this.update.bind(this));
   }
@@ -81,23 +71,16 @@ export class BitsClient {
     backgroundColor?: string | null;
     timeScale?: number;
   }): void {
-    if (backgroundColor) {
-      this.backgroundColor = backgroundColor;
-      this.program.uniforms.backgroundColor.value = new Color(backgroundColor);
-    }
-    if (timeScale !== undefined) {
-      this.timeScale = timeScale;
-      this.program.uniforms.timeScale.value = timeScale;
-    }
+
   }
+
   public destroy(): void {
     cancelAnimationFrame(this.animateId);
-    window.removeEventListener("resize", this.boundResize, false);
+    window.removeEventListener('resize', this.boundResize, false);
     this.program.remove();
     this.mesh.geometry.remove();
-
     this.dom.removeChild(this.renderer.gl.canvas);
-    this.gl.getExtension("WEBGL_lose_context")?.loseContext();
+    this.gl.getExtension("WEBGL_lose_context")?.loseContext()
     console.log('destroy')
   }
 }

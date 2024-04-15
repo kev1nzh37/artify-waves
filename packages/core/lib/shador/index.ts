@@ -20,6 +20,7 @@ export class ShadorClient {
   private luminance: number;
   private amplitude: number;
   private animateId: number = 0;
+  private boundResize;
 
   constructor({
     dom,
@@ -51,9 +52,9 @@ export class ShadorClient {
 
     this.mesh = new Mesh(this.gl, { geometry, program: this.program });
     this.animateId = requestAnimationFrame(this.update);
-
+    this.boundResize = this.resize.bind(this);
+    window.addEventListener('resize', this.boundResize, false);
     this.resize();
-    window.addEventListener('resize', this.resize, false);
     this.dom.appendChild(this.gl.canvas);
   }
 
@@ -97,8 +98,11 @@ export class ShadorClient {
   }
 
   public destroy = (): void => {
+    console.log('销毁函数进来了')
     cancelAnimationFrame(this.animateId);
-    window.removeEventListener('resize', this.resize, false);
+    window.removeEventListener('resize', this.boundResize, false);
     this.dom.removeChild(this.renderer.gl.canvas);
+    this.gl.getExtension("WEBGL_lose_context")?.loseContext();
+    console.log('destroy')
   }
 }
