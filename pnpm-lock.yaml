@@ -134,10 +134,6 @@ importers:
         version: 5.4.2
 
   packages/ui:
-    dependencies:
-      sass:
-        specifier: ^1.72.0
-        version: 1.72.0
     devDependencies:
       '@repo/core':
         specifier: workspace:*
