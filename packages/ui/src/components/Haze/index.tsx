@@ -1,4 +1,4 @@
-import { CloudyClient } from "@repo/core"
+import { HazeClient } from "@repo/core"
 import { useEffect, useRef, useState } from "react"
 import { GlobalProps } from "../utils/global-props"
 
@@ -8,7 +8,7 @@ export interface Props extends GlobalProps {
 
 }
 
-export const Cloudy: React.ForwardRefRenderFunction<
+export const Haze: React.ForwardRefRenderFunction<
   HTMLDivElement,
   Props
 > = (props) => {
@@ -20,11 +20,11 @@ export const Cloudy: React.ForwardRefRenderFunction<
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
-  const [client, setClient] = useState<CloudyClient | null>(null)
+  const [client, setClient] = useState<HazeClient | null>(null)
 
   const init = () => {
     if (!dom.current || client !== null) return
-    const c = new CloudyClient({
+    const c = new HazeClient({
       dom: dom.current,
     })
     setClient(c)
@@ -43,7 +43,7 @@ export const Cloudy: React.ForwardRefRenderFunction<
     <div
       className={[
         'wave-client',
-        'wave-cloudy-client',
+        'wave-scales-client',
         children ? 'wave-client-fullscreen' : ''
       ].join(' ')}
       ref={dom}

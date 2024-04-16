@@ -1,4 +1,4 @@
-import { Bits, Cloudy, Distance, Procedural, Shador } from "@repo/ui"
+import { Bits, Cloudy, Distance, Erosion, Gems, Haze, Procedural, Ray, Rivulet, Shador } from "@repo/ui"
 import { useRouter } from 'next/router';
 
 export const AllOverview = () => {
@@ -28,6 +28,31 @@ export const AllOverview = () => {
             name: 'Distance',
             component: Distance,
             url: '/distance'
+        },
+        {
+            name: 'Gems',
+            component: Gems,
+            url: '/gems'
+        },
+        {
+            name: 'Haze',
+            component: Haze,
+            url: '/haze'
+        },
+        {
+            name: 'Erosion',
+            component: Erosion,
+            url: '/erosion'
+        },
+        {
+            name: 'Rivulet',
+            component: Rivulet,
+            url: '/rivulet'
+        },
+        {
+            name: 'Ray',
+            component: Ray,
+            url: '/ray'
         },
 
     ]
