@@ -3,7 +3,43 @@ title: "Overview"
 description: Artify Waves
 ---
 
+import { Callout, Tabs, Tab, Steps } from "nextra-theme-docs"
+
 ## Getting Started
 
+### Install packages
 
-大家好，我是组件！
+To install Artify Waves in your project, run one of the following commands in your terminal:
+
+<Tabs items={["npm", "pnpm", "yarn"]} storageKey="selected-pkg-manager">
+  {/* prettier-ignore */}
+  <Tab>
+  ```bash copy
+  npm install @artify-waves/react
+  ```
+  </Tab>
+  {/* prettier-ignore */}
+  <Tab>
+  ```bash copy
+  pnpm install @artify-waves/react
+  ```
+  </Tab>
+  {/* prettier-ignore */}
+  <Tab>
+  ```bash copy
+  yarn add @artify-waves/react
+  ```
+  </Tab>
+</Tabs>
+
+### Usage
+
+```tsx
+import { Bits } from '@artify-waves/react'
+
+export const BitsOverview = () => (
+    <div className="wave">
+        <Bits />
+    </div>
+)
+```
