@@ -21,7 +21,7 @@ export const ShadorOverview = () => {
   return (
     <div className="wave">
       <div className="wave-ret">
-        <Shador color={color} luminance={luminance} amplitude={amplitude} />
+        <Shador color={color} luminance={luminance} amplitude={amplitude} width="100%" height="100%" />
       </div>
       {/* <div className="wave-config">
         <label>Color</label>

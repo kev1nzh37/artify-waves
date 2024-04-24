@@ -15,11 +15,12 @@ export const Shador: React.ForwardRefRenderFunction<
 
   const {
     color,
-    width = '100%',
-    height = '100%',
+    width = '480px',
+    height = '320px',
     luminance,
     amplitude,
-    children = null
+    children = null,
+    className = '',
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
@@ -58,7 +59,8 @@ export const Shador: React.ForwardRefRenderFunction<
       className={[
         'wave-client',
         'wave-shador-client',
-        children ? 'wave-client-fullscreen' : ''
+        children ? 'wave-client-fullscreen' : '',
+        className,
       ].join(' ')}
       ref={dom}
       style={{ width, height }}

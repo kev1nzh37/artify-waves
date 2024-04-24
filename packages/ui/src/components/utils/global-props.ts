@@ -3,4 +3,5 @@ export interface GlobalProps {
     height?: number | string
     fullscreen?: boolean
     children?: React.ReactNode
+    className?: string
 }

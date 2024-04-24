@@ -14,9 +14,10 @@ export const Haze: React.ForwardRefRenderFunction<
 > = (props) => {
 
   const {
-    width = '100%',
-    height = '100%',
-    children = null
+    width = '480px',
+    height = '320px',
+    children = null,
+    className = '',
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
@@ -44,7 +45,8 @@ export const Haze: React.ForwardRefRenderFunction<
       className={[
         'wave-client',
         'wave-scales-client',
-        children ? 'wave-client-fullscreen' : ''
+        children ? 'wave-client-fullscreen' : '',
+        className
       ].join(' ')}
       ref={dom}
       style={{ width, height }}

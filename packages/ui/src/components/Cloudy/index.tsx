@@ -16,7 +16,8 @@ export const Cloudy: React.ForwardRefRenderFunction<
   const {
     width = '100%',
     height = '100%',
-    children = null
+    children = null,
+    className = '',
   } = props
 
   const dom = useRef<HTMLDivElement>(null)
@@ -44,7 +45,8 @@ export const Cloudy: React.ForwardRefRenderFunction<
       className={[
         'wave-client',
         'wave-cloudy-client',
-        children ? 'wave-client-fullscreen' : ''
+        children ? 'wave-client-fullscreen' : '',
+        className,
       ].join(' ')}
       ref={dom}
       style={{ width, height }}

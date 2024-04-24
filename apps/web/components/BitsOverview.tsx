@@ -6,7 +6,7 @@ export const BitsOverview = () => {
   return (
     <div className="wave">
       <div className="wave-ret">
-        <Bits></Bits>
+        <Bits width="100%" height="100%"></Bits>
       </div>
     </div>
   )

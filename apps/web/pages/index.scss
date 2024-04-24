@@ -95,6 +95,15 @@ $wave-border-radius: 12px;
   }
 }
 
+@keyframes clipAnimation {
+  0% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+  100% {
+    clip-path: polygon(100% 0%, 100% 0%, 0% 100%, 0% 100%);
+  }
+}
+
 .home {
   margin-top: 80px;
   &-bg {
@@ -140,6 +149,7 @@ $wave-border-radius: 12px;
       text-align: center;
       font-weight: 600;
       transition: all 0.3s ease-in-out;
+      min-width: 200px;
       &:hover {
         opacity: 0.9;
         transform: scale(1.1);
@@ -151,38 +161,29 @@ $wave-border-radius: 12px;
       margin-right: 24px;
     }
     &__default {
-      background: #e1e1e1;
-      color: #fff;
+      background: $primary-color-o-25;
+      color: $primary-color;
     }
   }
   &-wave {
-    height: 50px;
-    width: 50vw;
     margin-top: 4rem;
-    border-radius: $wave-border-radius;
-    box-shadow: $wave-box-shadow;
-    overflow: hidden;
+    position: relative;
+    height: 480px;
+    width: 100%;
+    &-content {
+      border-radius: $wave-border-radius;
+      box-shadow: $wave-box-shadow;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      &-animation {
+        animation: clipAnimation 1s forwards;
+      }
+    }
+    &-down {
+      z-index: -1;
+    }
+    // animation: fadeInOut 5s infinite;
   }
-}
-
-.fade-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-.fade-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition:
-    opacity 500ms,
-    transform 500ms;
-}
-.fade-exit {
-  opacity: 1;
-}
-.fade-exit-active {
-  opacity: 0;
-  transform: scale(1.1);
-  transition:
-    opacity 500ms,
-    transform 500ms;
 }
